@@ -21,8 +21,7 @@ const NavBar = () => {
           <b>{site.siteMetadata.title}</b>
         </Link>
 
-        <a role="button"
-           className={"navbar-burger burger " + (toggled ? "is-active" : "")}
+        <a className={"navbar-burger burger " + (toggled ? "is-active" : "")}
            onClick={() => setToggled(!toggled)}>
           <span />
           <span />

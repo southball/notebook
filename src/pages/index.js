@@ -6,6 +6,9 @@ import SEO from "../components/seo";
 
 const IndexPage = ({ data }) => {
   const { entries } = data;
+  const sortedEntries = entries.edges.map(({node}) => node).sort(
+    (entry1, entry2) => +(entry1.frontmatter.title > entry2.frontmatter.title)
+  );
 
   return (
     <Layout>
@@ -13,7 +16,7 @@ const IndexPage = ({ data }) => {
       <div className="content">
         <h1>Entries List</h1>
         <ul>
-          {entries.edges.map(({ node }) => (
+          {sortedEntries.map((node) => (
             <li key={node.frontmatter.id}>
               <Link to={"/entry/" + node.frontmatter.id}>
                 {node.frontmatter.title || node.frontmatter.title_short}
