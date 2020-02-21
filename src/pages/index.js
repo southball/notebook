@@ -16,7 +16,7 @@ const IndexPage = ({ data }) => {
           {entries.edges.map(({ node }) => (
             <li key={node.frontmatter.id}>
               <Link to={"/entry/" + node.frontmatter.id}>
-                {node.frontmatter.title_short}
+                {node.frontmatter.title || node.frontmatter.title_short}
               </Link>
             </li>
           ))}
@@ -33,6 +33,7 @@ export const pageQuery = graphql`
         node {
           frontmatter {
             title
+            title_short
             id
           }
         }
