@@ -10,6 +10,6 @@ The OSI model contains 7 layers:
 - 6: Presentation Layer
 - 5: Session Layer
 - 4: Transport Layer
-- 3: [Network Layer](/entry/network-layer)
-- 2: [Data Link Layer](/entry/data-link-layer)
+- 3: [Network Layer](network-layer)
+- 2: [Data Link Layer](data-link-layer)
 - 1: Physical Layer

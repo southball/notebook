@@ -4,4 +4,4 @@ title: Network Layer
 parent: osi-model
 ---
 
-The network layer includes the [IP protocol](/entry/ip-protocol).
+The network layer includes the [IP protocol](ip-protocol).

@@ -1,6 +1,7 @@
 ---
 id: arp
-title: ARP
+title: Address Resolution Protocol (ARP)
+title_short: ARP
 parent: data-link-layer
 related:
 - rarp
@@ -8,4 +9,4 @@ related:
 
 ARP is a protocol that converts IP address to MAC address.
 
-The reverse protocol is [RARP](/entry/rarp).
+The reverse protocol is [RARP](rarp).

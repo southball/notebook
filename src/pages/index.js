@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "gatsby";
+import { Link, graphql } from "gatsby";
 
 import Layout from "../components/layout";
 import SEO from "../components/seo";
@@ -16,7 +16,7 @@ const IndexPage = ({ data }) => {
           {entries.edges.map(({ node }) => (
             <li key={node.frontmatter.id}>
               <Link to={"/entry/" + node.frontmatter.id}>
-                {node.frontmatter.title}
+                {node.frontmatter.title_short}
               </Link>
             </li>
           ))}

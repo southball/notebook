@@ -8,10 +8,20 @@ import 'katex/dist/katex.min.css';
 export default function Template({ pageContext, data }) {
   const { frontmatter, html } = data.entry;
   const parent = data.parentEntry;
+  const { breadcrumbPath } = pageContext;
+
+  console.log(breadcrumbPath);
 
   return (
     <Layout>
       <SEO title={frontmatter.title} />
+      <nav className="breadcrumb">
+        <ul>
+          {breadcrumbPath.map(({id, title_short}) => (
+            <li><Link to={"/entry/" + id}>{title_short}</Link></li>
+          ))}
+        </ul>
+      </nav>
       <div className="entry-container">
         <div className="entry">
           <div className="columns is-multiline">

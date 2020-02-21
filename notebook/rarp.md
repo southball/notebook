@@ -1,6 +1,7 @@
 ---
 id: rarp
-title: RARP
+title: Reverse Address Resolution Protocol (RARP)
+title_short: RARP
 parent: data-link-layer
 related:
 - arp
