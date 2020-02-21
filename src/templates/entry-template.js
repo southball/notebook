@@ -1,58 +1,86 @@
-import React from "react";
+import React, { useState } from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
 
+import 'katex/dist/katex.min.css';
+
 export default function Template({ pageContext, data }) {
-  console.log(data, pageContext);
   const { frontmatter, html } = data.entry;
   const parent = data.parentEntry;
+
   return (
     <Layout>
       <SEO title={frontmatter.title} />
       <div className="entry-container">
-        <div className="entry content">
-          <h1>{frontmatter.title}</h1>
-          {
-            parent
-              ? <p>
-                Parent:&nbsp;
-                <Link to={"/entry/" + parent.frontmatter.id}>{parent.frontmatter.title}</Link>
-              </p>
-              : <></>
-          }
-          <div
-            className="entry-content content"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
-          {
-            data.relatedEntries.edges.length
-              ? <>
-                <h2>Related Concepts</h2>
-                <ul>
-                  {data.relatedEntries.edges.map(({ node: { frontmatter } }) => (
-                    <li key={frontmatter.id}>
-                      <Link to={"/entry/" + frontmatter.id}>{frontmatter.title}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </>
-              : <></>
-          }
-          {
-            data.childrenEntries.edges.length
-              ? <>
-                <h2>Children Concepts</h2>
-                <ul>
-                  {data.childrenEntries.edges.map(({ node: { frontmatter }}) => (
-                    <li key={frontmatter.id}>
-                    <Link to={"/entry/" + frontmatter.id}>{frontmatter.title}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </>
-              : <></>
-          }
+        <div className="entry">
+          <div className="columns is-multiline">
+            <div className="column is-full-tablet is-one-third-desktop">
+              <aside className="menu">
+                {
+                  !!parent &&
+                  <>
+                    <p className="menu-label">Parent entry</p>
+                    <ul className="menu-list">
+                      <li>
+                        <Link to={"/entry/" + parent.frontmatter.id}>{parent.frontmatter.title}</Link>
+                      </li>
+                    </ul>
+                  </>
+                }
+                {
+                  data.relatedEntries.edges.length > 0 &&
+                  <>
+                    <p className="menu-label">
+                      Related Entries
+                    </p>
+                    <ul className="menu-list">
+                      {data.relatedEntries.edges.map(({ node: { frontmatter } }) => (
+                        <li key={frontmatter.id}>
+                          <Link to={"/entry/" + frontmatter.id}>{frontmatter.title}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                }
+                {
+                  !!parent && data.siblingEntries.edges.length > 0 &&
+                  <>
+                    <p className="menu-label">
+                      Sibling Entries
+                    </p>
+                    <ul className="menu-list">
+                      {data.siblingEntries.edges.map(({ node: { frontmatter } }) => (
+                        <li key={frontmatter.id}>
+                          <Link to={"/entry/" + frontmatter.id}>{frontmatter.title}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                }
+                {
+                  data.childrenEntries.edges.length > 0 &&
+                  <>
+                    <p className="menu-label">Children Entries</p>
+                    <ul className="menu-list">
+                      {data.childrenEntries.edges.map(({ node: { frontmatter } }) => (
+                        <li key={frontmatter.id}>
+                          <Link to={"/entry/" + frontmatter.id}>{frontmatter.title}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                }
+              </aside>
+            </div>
+            <div className="column entry-body content">
+              <h1>{frontmatter.title}</h1>
+              <div
+                className="entry-content content"
+                dangerouslySetInnerHTML={{ __html: html }}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </Layout>
@@ -81,6 +109,17 @@ export const pageQuery = graphql`
     }
     
     relatedEntries: allMarkdownRemark(filter: {frontmatter: {id: {in: $related}}}) {
+      edges {
+        node {
+          frontmatter {
+            title
+            id
+          }
+        }
+      }
+    }
+    
+    siblingEntries: allMarkdownRemark(filter: {frontmatter: {parent: {eq: $parentId}, id: {ne: $id}}}) {
       edges {
         node {
           frontmatter {
