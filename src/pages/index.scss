@@ -1,0 +1,17 @@
+li.node {
+  list-style: none;
+  margin-top: 0!important;
+  margin-bottom: 0!important;
+
+  ul.node-children {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .bullet-point {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+  }
+}
