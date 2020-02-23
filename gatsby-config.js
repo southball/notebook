@@ -37,9 +37,17 @@ module.exports = {
         languages: [{
           name: 'en',
           filterNodes: (node) => true,
+          plugins: [
+            (lunr) => (builder) => {
+              builder.pipeline.add(lunr.stemmer);
+              builder.searchPipeline.add(lunr.stemmer);
+              builder.k1(1.3);
+              builder.b(0.75);
+            }
+          ]
         }],
         fields: [
-          {name: 'title', store: true, attributes: {boost: 20}},
+          {name: 'title', store: true},
           {name: 'title_short', store: true},
           {name: 'id', store: true},
           {name: 'content', store: true},

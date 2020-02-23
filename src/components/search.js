@@ -18,8 +18,10 @@ const Search = ({ show, setShow }) => {
   }
 
   useEffect(() => {
-    console.log(searchQuery);
-    setResult(search(searchQuery));
+    try {
+      const result = search(searchQuery);
+      setResult(result);
+    } catch(e) {}
   }, [searchQuery]);
 
   return (
