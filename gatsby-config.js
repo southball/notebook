@@ -31,6 +31,29 @@ module.exports = {
     },
     `gatsby-plugin-sass`,
     `gatsby-plugin-catch-links`,
+    {
+      resolve: 'gatsby-plugin-lunr',
+      options: {
+        languages: [{
+          name: 'en',
+          filterNodes: (node) => true,
+        }],
+        fields: [
+          {name: 'title', store: true, attributes: {boost: 20}},
+          {name: 'title_short', store: true},
+          {name: 'id', store: true},
+          {name: 'content', store: true},
+        ],
+        resolvers: {
+          MarkdownRemark: {
+            title: (node) => node.frontmatter.title,
+            title_short: (node) => node.frontmatter.title_short,
+            id: (node) => node.frontmatter.id,
+            content: (node) => node.rawMarkdownBody,
+          }
+        }
+      }
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
